@@ -1,0 +1,15 @@
+{
+  "name": "public",
+  "authors": [
+    "Luke Sontrop <luke@bluesaltlabs.com>"
+  ],
+  "description": "A custom Pico CMS by lukerz8",
+  "license": "MIT",
+  "ignore": [
+    "bower_components"
+  ],
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "bootstrap": "^3.3.7"
+  }
+}

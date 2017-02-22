@@ -1,0 +1,25 @@
+{% extends "base.twig" %}
+
+{% block template_content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <form class="form" method="post">
+                    {% if login_error %}<p class="error">{{ login_error }}</p>{% endif %}
+                    <div class="form-group">
+                        <label class="sr-only">Username</label>
+                        <input class="form-control" type="text" name="username" id="username" placeholder="Username" value="{{ username }}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only">Password</label>
+                        <input class="form-control" type="password" name="password" id="password" placeholder="Password"/>
+                    </div>
+
+                    <button class="btn btn-success pull-right" type="submit">Login</button>
+                    {% if redirect_url %}<input type="hidden" name="redirect_url" value="{{ redirect_url }}"/>{% endif %}
+                </form>
+                <br /><br /><br /><br />
+            </div>
+        </div>
+    </div>
+{% endblock %}
