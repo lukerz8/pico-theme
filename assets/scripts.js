@@ -4,14 +4,15 @@
  */
 
 var Lukerz8Pico = {
+    cache: {},
     navbarScrollTimeout: 0,
     navbarScrollDelay: 50,
     navbarOnScroll: function() {
-        if (Lukerz8Pico.navbarScrollTimeout) { clearTimeout(Lukerz8Pico.navbarScrollTimeout); }
+        if(Lukerz8Pico.navbarScrollTimeout) { clearTimeout(Lukerz8Pico.navbarScrollTimeout); }
         Lukerz8Pico.navbarScrollTimeout = setTimeout(Lukerz8Pico.collapseNavbar, Lukerz8Pico.navbarScrollDelay)
     },
     collapseNavbar: function() {
-        if ($(".navbar").offset().top > 50) {
+        if($(".navbar").offset().top > 50) {
             $(".navbar-fixed-top").addClass("top-nav-collapse");
         } else {
             $(".navbar-fixed-top").removeClass("top-nav-collapse");
@@ -38,7 +39,7 @@ var Lukerz8Pico = {
         http.send();
     },
     getJSONConfig: function(dir, configName, callback) {
-        if 	(typeof dir === 'string' &&
+        if(typeof dir === 'string' &&
             (dir.toLowerCase() === 'work' || dir.toLowerCase() === 'personal')
         ){
             var url = '/assets/js/' + dir + '/' + configName + '.json';
@@ -58,6 +59,117 @@ var Lukerz8Pico = {
         } else {
             callback('value of dir is invalid. Config file could not be retrieved.');
         }
+    },
+    // Sort the links alphabetically by their title
+    sortLinkData: function() {
+        if(this.cache.hasOwnProperty('linkData')) {
+            for(var linkType in this.cache.linkData) {
+                this.cache.linkData[linkType].sort(function(a, b){
+                    var nameA=a.title.toLowerCase(), nameB=b.title.toLowerCase();
+                    if(nameA < nameB) { return -1; }
+                    if(nameA > nameB) { return  1; }
+                    return 0;
+                });
+            }
+        } else {
+            console.warn('from Lukerz8Pico.sortLinkData(): cache.linkData[] does not exist.');
+        }
+    },
+    // Add the link elements to the specified container
+    addLinkElementsTo: function(containerID) {
+        var mainContainer = document.getElementById(containerID);
+
+        if(mainContainer && this.cache.hasOwnProperty('linkData')) {
+            var linkDataSize = Object.keys(this.cache.linkData).length;
+
+            for(var linkType in this.cache.linkData) {
+                // Create the title for the links of this type
+                mainContainer.appendChild( this.getLinkTypeTitleEl(linkType) );
+
+                // Create the container div for these link boxes
+                var linksContainer = document.createElement('div');
+                linksContainer.className = 'links-container';
+
+                for(var linkId in  this.cache.linkData[linkType]) {
+                    linksContainer.appendChild( this.getLinkEl(linkType, linkId) );
+                }
+
+                // We need to clear the floats after adding all the linkboxes
+                linksContainer.appendChild( this.getClearFloatEl() );
+
+                // Append the links container to the main container
+                mainContainer.appendChild(linksContainer);
+
+                if( (linkType + 1) < linkDataSize ) {
+                    mainContainer.appendChild( document.createElement('hr') );
+                }
+            }
+        } else {
+            if(!mainContainer) {
+                console.warn('from Lukerz8Pico.addLinkElementsTo(): element #' + containerID + ' does not exist.');
+            }
+            if(!this.cache.hasOwnProperty('linkData')) {
+                console.warn('from Lukerz8Pico.addLinkElementsTo(): cache.linkData[] does not exist.');
+            }
+        }
+    },
+    getLinkEl: function(linkType, linkId) {
+        if(this.cache.hasOwnProperty('linkData') && this.cache.hasOwnProperty('dashboardConfig')) {
+            var logoTitle = this.getLogoTitle(this.cache.linkData[linkType][linkId].filename);
+
+            // Create the parent li element
+            var linkBox = document.createElement('a');
+            linkBox.className = 'linkbox-item';
+            linkBox.href = this.cache.linkData[linkType][linkId].href;
+            linkBox.alt = logoTitle;
+            linkBox.target = '_blank';
+
+            // Create the img element
+            var imgEl = document.createElement('img');
+            imgEl.src = this.cache.dashboardConfig.srcDirs[linkType] + this.cache.linkData[linkType][linkId].filename + this.cache.dashboardConfig.imgExt;
+            imgEl.title = logoTitle;
+
+            // Create the title for this link box
+            var titleEl = document.createElement('span');
+            titleEl.innerHTML = this.cache.linkData[linkType][linkId].title;
+
+            // Append the elements together
+            linkBox.appendChild(imgEl);
+            linkBox.appendChild(titleEl);
+
+            return linkBox;
+        } else {
+            if(!this.cache.hasOwnProperty('linkData')) {
+                console.warn('from Lukerz8Pico.getLinkEl(): cache.linkData[] does not exist.');
+            }
+            if(!this.cache.hasOwnProperty('dashboardConfig')) {
+                console.warn('from Lukerz8Pico.getLinkEl(): cache.dashboardConfig[] does not exist.');
+            }
+        }
+    },
+    getLinkTypeTitleEl: function(title) {
+        if(this.cache.hasOwnProperty('dashboardConfig')) {
+            var titleEl = document.createElement(this.cache.dashboardConfig.linkTypeTitleEl);
+            titleEl.className = 'link-type-title';
+            titleEl.innerHTML = title;
+            return titleEl;
+        } else {
+            console.warn('from Lukerz8Pico.getLinkTypeTitleEl(): cache.dashboardConfig[] does not exist.');
+        }
+    },
+    getLogoTitle: function(logoName) {
+        if(logoName) {
+            logoName = logoName.replace(/[a-z]/, function(str) { return str.toUpperCase(); });
+            return logoName + ' Logo';
+        } else {
+            console.warn('from Lukerz8Pico.getLogoTitle(): Must specify logoName');
+            return '';
+        }
+    },
+    getClearFloatEl: function() {
+        var clearDiv = document.createElement('div');
+        clearDiv.style.clear = 'both';
+        return clearDiv;
     },
     createTodayLinks: function() {
         var d = new Date();
