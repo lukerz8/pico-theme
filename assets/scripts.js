@@ -1,6 +1,6 @@
 /**
  * Created by lukes on 2016/08/05
- * Updated by lukes on 2017/05/31
+ * Updated by lukes on 2017/06/12
  */
 
 var Lukerz8Pico = {
@@ -59,6 +59,32 @@ var Lukerz8Pico = {
         } else {
             callback('value of dir is invalid. Config file could not be retrieved.');
         }
+    },
+    getDashboardConfig: function(dir, configName, callback) {
+        this.getJSONConfig(dir, configName, function(err, data) {
+            if(err == null) {
+                this.cache.dashboardConfig = data.config;
+                this.cache.linkData = data.data;
+
+                callback();
+            } else { console.warn(err); }
+        }.bind(this));
+    },
+    // Adds dashboard links from specified config file to specified element ID
+    addDashboardLinksFromConfigTo: function(dir, elementID) {
+        this.getDashboardConfig(dir, 'dashboard', function() {
+            if(this.cache.hasOwnProperty('linkData') && this.cache.hasOwnProperty('dashboardConfig')) {
+                this.sortLinkData();
+                this.addLinkElementsTo(elementID);
+            } else {
+                if(!this.cache.hasOwnProperty('linkData')) {
+                    console.warn('from Lukerz8Pico.addDashboardLinksFromConfig(): cache.linkData[] does not exist.');
+                }
+                if(!this.cache.hasOwnProperty('dashboardConfig')) {
+                    console.warn('from Lukerz8Pico.addDashboardLinksFromConfig(): cache.dashboardConfig[] does not exist.');
+                }
+            }
+        }.bind(this));
     },
     // Sort the links alphabetically by their title
     sortLinkData: function() {
