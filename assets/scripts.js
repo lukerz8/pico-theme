@@ -110,7 +110,7 @@ var Lukerz8Pico = {
 
             for(var linkType in this.cache.linkData) {
                 // Create the title for the links of this type
-                mainContainer.appendChild( this.getLinkTypeTitleEl(linkType) );
+                mainContainer.appendChild( this.getTitleElement(linkType) );
 
                 // Create the container div for these link boxes
                 var linksContainer = document.createElement('div');
@@ -152,7 +152,7 @@ var Lukerz8Pico = {
 
             // Create the img element
             var imgEl = document.createElement('img');
-            imgEl.src = this.cache.dashboardConfig.srcDirs[linkType] + this.cache.linkData[linkType][linkId].filename + this.cache.dashboardConfig.imgExt;
+            imgEl.src = this.getSrcDirFor(linkType) + this.cache.linkData[linkType][linkId].filename + this.cache.dashboardConfig.imgExt;
             imgEl.title = logoTitle;
 
             // Create the title for this link box
@@ -173,23 +173,32 @@ var Lukerz8Pico = {
             }
         }
     },
-    getLinkTypeTitleEl: function(title) {
+    getTitleElement: function(title) {
         if(this.cache.hasOwnProperty('dashboardConfig')) {
-            var titleEl = document.createElement(this.cache.dashboardConfig.linkTypeTitleEl);
+            var titleEl = document.createElement(this.cache.dashboardConfig.titleElement);
             titleEl.className = 'link-type-title';
             titleEl.innerHTML = title;
             return titleEl;
         } else {
-            console.warn('from Lukerz8Pico.getLinkTypeTitleEl(): cache.dashboardConfig[] does not exist.');
+            console.warn('from Lukerz8Pico.getTitleElement(): cache.dashboardConfig[] does not exist.');
         }
+    },
+    getSrcDirFor: function(linkType) {
+        if(this.cache.dashboardConfig.hasOwnProperty('srcDirs')) {
+                 if(this.cache.dashboardConfig.srcDirs.hasOwnProperty(linkType))  { return this.cache.dashboardConfig.srcDirs[linkType];  }
+            else if(this.cache.dashboardConfig.srcDirs.hasOwnProperty('Default')) { return this.cache.dashboardConfig.srcDirs['Default']; }
+            else if(this.cache.dashboardConfig.srcDirs.hasOwnProperty('default')) { return this.cache.dashboardConfig.srcDirs['default']; }
+        }
+        else if(this.cache.dashboardConfig.hasOwnProperty('srcDir')) { return this.cache.dashboardConfig.srcDir; }
+        // else
+        return '/';
     },
     getLogoTitle: function(logoName) {
         if(logoName) {
-            logoName = logoName.replace(/[a-z]/, function(str) { return str.toUpperCase(); });
-            return logoName + ' Logo';
+            return logoName.replace(/[a-z]/, function(str) { return str.toUpperCase(); }) + ' Logo';
         } else {
             console.warn('from Lukerz8Pico.getLogoTitle(): Must specify logoName');
-            return '';
+            return '? Logo';
         }
     },
     getClearFloatEl: function() {
@@ -226,8 +235,6 @@ var Lukerz8Pico = {
         }
     }
 };
-
-
 
 // Closes the Responsive Menu on Menu Item Click
 $('.navbar-collapse ul li a').click(function() {
