@@ -44,6 +44,9 @@ var Lukerz8Pico = {
         ){
             var url = '/assets/js/' + dir + '/' + configName + '.json';
 
+            // Add date param to force clearing the browser cache
+            url += '?dt=' + Date.now();
+
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
             xhr.responseType = 'json';
