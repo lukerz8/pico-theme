@@ -25,7 +25,7 @@ var Lukerz8Pico = {
         var http = new XMLHttpRequest();
         http.open('HEAD', url);
         http.onreadystatechange = function() {
-            if (this.readyState == this.DONE) {
+            if (this.readyState === this.DONE) {
                 if (this.status === 200) {
                     if(callbackSuccess !== null) { callbackSuccess(callbackArg); }
                     else { return 0; }
@@ -52,10 +52,10 @@ var Lukerz8Pico = {
             xhr.responseType = 'json';
             xhr.onload = function() {
                 var status = xhr.status;
-                if (status == 200) {
+                if (status === 200) {
                     callback(null, xhr.response);
                 } else {
-                    callback(status);
+                    callback(status, xhr.response);
                 }
             };
             xhr.send();
@@ -65,7 +65,8 @@ var Lukerz8Pico = {
     },
     getDashboardConfig: function(dir, configName, callback) {
         this.getJSONConfig(dir, configName, function(err, data) {
-            if(err == null) {
+            if(!err) {
+                console.log(data); // debug
                 this.cache.dashboardConfig = data.config;
                 this.cache.linkData = data.data;
 
