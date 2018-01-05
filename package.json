@@ -1,0 +1,25 @@
+{
+  "name": "lukerz8-pico-theme",
+  "version": "1.0.0",
+  "description": "A custom [Pico CMS](https://github.com/picocms/Pico) theme by lukerz8",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukerz8/pico-theme.git"
+  },
+  "author": "Luke Sontrop <luke@bluesaltlabs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukerz8/pico-theme/issues"
+  },
+  "homepage": "https://github.com/lukerz8/pico-theme#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1",
+    "ledj": "^0.2.3",
+    "lodash": "^4.17.4"
+  }
+}
