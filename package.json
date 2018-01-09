@@ -22,6 +22,6 @@
     "ledj": "^0.2.3",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
-    "sidebar-links": "^0.1.0"
+    "sidebar-links": "^0.2.0"
   }
 }

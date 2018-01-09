@@ -1,6 +1,6 @@
 /**
  * Created by lukes on 2016/08/05
- * Updated by lukes on 2017/06/12
+ * Updated by lukes on 2018/01/09
  */
 
 var Lukerz8Pico = {
@@ -14,8 +14,10 @@ var Lukerz8Pico = {
     collapseNavbar: function() {
         if($(".navbar").offset().top > 50) {
             $(".navbar-fixed-top").addClass("top-nav-collapse");
+            $("#sidebar-nav-container").addClass("sidebar-nav-collapse");
         } else {
             $(".navbar-fixed-top").removeClass("top-nav-collapse");
+            $("#sidebar-nav-container").removeClass("sidebar-nav-collapse");
         }
     },
     getHostName: function() {
