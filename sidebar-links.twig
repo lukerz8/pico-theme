@@ -1,0 +1,28 @@
+{% extends "base.twig" %}
+
+{% block template_content %}
+    <style type="text/css">
+        #header-nav-container { margin-left: -20px; }
+
+        #header-nav-container,
+        #header-nav-container li { list-style: none; }
+        #header-nav-container li > a { text-decoration: none; }
+    </style>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10">
+                {{ content }}
+            </div>
+            <div class="col-sm-2">
+                <ul id="header-nav-container"></ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ theme_url }}/node_modules/sidebar-links/dist/sidebar-links.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            sidebarLinks('header-nav-container', 'link', 6);
+        });
+    </script>
+{% endblock %}
