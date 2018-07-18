@@ -1,12 +1,24 @@
+html, body {
+    color: #EDEFEA;
+    background-color: #282e3c;
+}
+a {
+    color: #a1c3eb; text-decoration: none;
+}
+a:hover,a:active {
+    color: #fff;
+}
+
+.navbar-custom, #footer {
+    background-color: rgba(26, 28, 33, 0.8);
+}
 .navbar-custom {
     margin-bottom: 0;
     border-bottom: 1px solid rgba(100, 100, 120, 0.8);
     text-transform: uppercase;
-    background-color: rgba(2, 2, 5, 0.8);
+    
 }
 #footer {
-    color: #eef;
-    background-color: rgba(2, 2, 5, 0.8);
     padding: 20px 0;
 }
 
@@ -48,7 +60,7 @@
 .navbar-custom .nav li a:active {
     color: #eef;
     outline: none;
-    background-color: rgba(2, 2, 5, 0.8);
+    background-color: rgba(26, 28, 33, 0.8);
 }
 .navbar-custom .nav li.active {
     outline: none;
@@ -62,7 +74,6 @@
         padding: 20px 0;
         border-bottom: none;
         letter-spacing: 1px;
-        background: rgba(2, 2, 5, 0.8);
         -webkit-transition: background 150ms ease-in-out, padding 300ms ease-in-out;
         -moz-transition: background 150ms ease-in-out, padding 300ms ease-in-out;
         transition: background 150ms ease-in-out, padding 300ms ease-in-out;
@@ -75,10 +86,45 @@
     .navbar-custom.top-nav-collapse,
     .navbar-custom.top-nav-collapse span,
     .navbar-custom.top-nav-collapse a {
-        color: #364d59;
+        color: #b0bfd7;
     }
 }
 
 section#content .inner {
     margin-top: 150px;
+}
+
+
+.panel {
+    background-color: rgba(225, 225, 225, 0.2);
+}
+.panel-default, .list-group-item {
+    color: inherit;
+    background-color: rgba(225, 225, 225, 0.3);
+    border-color: rgba(29, 29, 29, 0.8);
+}
+
+.panel-default>.panel-heading {
+    color: inherit;
+    background-color: rgba(225, 225, 225, 0.3);
+    border-color: rgba(29, 29, 29, 0.8);
+}
+
+.list-group-item:not(:last-child) {
+    border-bottom: 1px solid rgba(29, 29, 29, 0.8);
+}
+
+
+h2.panel-heading > a { color: #EDEFEA; }
+h2.panel-heading > a:hover,
+h2.panel-heading > a:focus,
+h2.panel-heading > a:active { color: #fff; background-color: rgba(225, 225, 225, 0.5); text-decoration: none; }
+.list-group-item:not(:last-child) { border-bottom: 1px solid #ddd; }
+
+.list-group-item.disabled, .list-group-item.disabled:focus, .list-group-item.disabled:hover {
+    color: #dfe1dc;
+    background-color: rgba(225, 225, 225, 0.1);
+}
+a.list-group-item, button.list-group-item {
+    color: #EDEFEA;
 }

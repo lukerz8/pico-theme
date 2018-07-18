@@ -1,0 +1,11 @@
+.ledj-link-grid > .link-grid-item {
+    color: inherit;
+    border-color: rgba(29, 29, 29, 0.8);
+}
+.ledj-link-grid > .link-grid-item:hover,
+.ledj-link-grid > .link-grid-item:active,
+.ledj-link-grid > .link-grid-item:focus,
+.ledj-link-grid > .link-grid-item:visited {
+    color: inherit;
+    background: rgba(225, 225, 225, 0.5);
+}
